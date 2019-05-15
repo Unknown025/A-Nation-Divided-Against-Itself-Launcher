@@ -7,7 +7,10 @@ import shutil
 import socket
 import subprocess
 import time
-from tkinter import *
+try:
+    from tkinter import *
+except ImportError:
+    exit(0)
 from tkinter import messagebox
 from tkinter import ttk
 from urllib.request import urlretrieve
@@ -123,7 +126,7 @@ def launchmc():
                         "disabled. Also, the launcher will appear to freeze when downloading files. Please be "
                         "patient.")
     p = DownloadANDAI.Profile("1.7.10")
-    p.downloadMissingFiles()
+    p.download_missing_files()
     # p.downloadForge()
     if os.path.isfile("usernamecache.json"):
         shutil.copyfile("usernamecache.json", "mcdata\\usernamecache.json")
@@ -137,7 +140,7 @@ def launchmc():
     if FailedFiles > 0:
         print("[WARN]: Attempting to launch, likely without the right files.")
         try:
-            subprocess.Popen(p.launchcmd(), shell=True)
+            subprocess.Popen(p.launch_cmd(), shell=True)
         except:
             messagebox.showerror("Error!",
                                  "An error has cccured, and Minecraft cannot be launched.\n%s files could not be downloaded. (Error #E12)" % FailedFiles)
@@ -145,7 +148,7 @@ def launchmc():
                              "An error has cccured, and Minecraft cannot be launched.\n%s files could not be downloaded. (Error #D34)" % FailedFiles)
     else:
         pass
-        subprocess.Popen(p.launchcmd(), shell=True)
+        subprocess.Popen(p.launch_cmd(), shell=True)
 
 
 creds = Toplevel()
